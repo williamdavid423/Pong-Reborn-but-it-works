@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace Pong_Reborn_but_hopefully_it_works
 {
@@ -22,7 +23,7 @@ namespace Pong_Reborn_but_hopefully_it_works
 
         int wall2X = 395;
         int wall2Y = 160;
-      
+
 
         int paddle1X = 10;
         int paddle1Y = 170;
@@ -57,7 +58,7 @@ namespace Pong_Reborn_but_hopefully_it_works
         public Form1()
         {
             InitializeComponent();
-    
+
         }
 
         private void Timer1_Tick(object sender, EventArgs e)
@@ -81,7 +82,7 @@ namespace Pong_Reborn_but_hopefully_it_works
                     ballX = paddle2X - ballWidth - 1;
                 }
 
-               
+
 
                 Console.WriteLine(paddle1Y);
                 Refresh();
@@ -109,11 +110,11 @@ namespace Pong_Reborn_but_hopefully_it_works
 
                 wall1Y += wallSpeed;
 
-                if(wall1Y < 0)
+                if (wall1Y < 0)
                 {
                     wallSpeed *= -1;
                 }
-                else if(wall1Y + wallHeight > 400)
+                else if (wall1Y + wallHeight > 400)
                 {
                     wallSpeed *= -1;
                 }
@@ -128,7 +129,7 @@ namespace Pong_Reborn_but_hopefully_it_works
                 {
                     wallSpeed *= -1;
                 }
-                if(wall1Rec.IntersectsWith(ballRec))
+                if (wall1Rec.IntersectsWith(ballRec))
                 {
                     ballXSpeed *= -1;
                 }
@@ -137,13 +138,44 @@ namespace Pong_Reborn_but_hopefully_it_works
                     ballXSpeed *= -1;
                 }
 
+                if (ballX > 600)
+                {
+                    player1Score++;
+                    p1ScoreLabel.Text = $"{player1Score}";
+
+                    ballX = 295;
+                    ballY = 195;
+                }
+                else if (ballX < 0)
+                {
+                    player2Score++;
+                    p2ScoreLabel.Text = $"{player2Score}";
+
+                    ballX = 295;
+                    ballY = 195;
+                }
+                if (player1Score == 3)
+                {
+                    outputLabel.Visible = true;
+                    outputLabel.Text = "Player 1 Wins";
+                    gameTimer.Enabled = false;
+                }
+                else if (player2Score == 3)
+                {
+                    outputLabel.Visible = true;
+                    outputLabel.Text = "Player 2 Wins";
+                    gameTimer.Enabled = false;
+                }
+
+       
+
                 Refresh();
             }
 
 
-            }
+        }
 
-            private void Form1_KeyDown(object sender, KeyEventArgs e)
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
             {
@@ -190,7 +222,7 @@ namespace Pong_Reborn_but_hopefully_it_works
                 e.Graphics.FillRectangle(blueBrush, paddle1X, paddle1Y, paddleWidth, paddleHeight);
                 e.Graphics.FillRectangle(blueBrush, paddle2X, paddle2Y, paddleWidth, paddleHeight);
             }
-            if(scene == 2)
+            if (scene == 2)
             {
                 e.Graphics.FillRectangle(whiteBrush, ballX, ballY, ballWidth, ballHeight);
 
@@ -202,9 +234,9 @@ namespace Pong_Reborn_but_hopefully_it_works
 
                 e.Graphics.DrawRectangle(blackPen, wall2X, wall2Y, wallWidth, wallHeight);
                 e.Graphics.FillRectangle(whiteBrush, wall2X, wall2Y, wallWidth, wallHeight);
-                
+
             }
-            
+
         }
 
         private void Button1_Click(object sender, EventArgs e)
@@ -214,29 +246,39 @@ namespace Pong_Reborn_but_hopefully_it_works
             switch (scene)
             {
                 case 0:
+                    player1Score = 0;
+                    player2Score = 0;
+                    p1ScoreLabel.Visible = false;
+                    p2ScoreLabel.Visible = false;
+                    fastButton.Visible = true;
+                    wallsButton.Visible = true;
 
                     break;
                 case 1:
                     gameTimer.Enabled = true;
                     fastButton.Visible = false;
                     wallsButton.Visible = false;
-                    paddleSpeed = 6; 
+                    p1ScoreLabel.Visible = true;
+                    p2ScoreLabel.Visible = true;
+                    paddleSpeed = 6;
                     this.Focus();
                     break;
-              
+
             }
         }
 
         private void WallsButton_Click(object sender, EventArgs e)
         {
-            if(scene == 0) { scene = 2; }
+            if (scene == 0) { scene = 2; }
 
-            switch(scene)
+            switch (scene)
             {
                 case 2:
                     gameTimer.Enabled = true;
                     fastButton.Visible = false;
                     wallsButton.Visible = false;
+                    p1ScoreLabel.Visible = true;
+                    p2ScoreLabel.Visible = true;
                     this.Focus();
                     break;
             }
