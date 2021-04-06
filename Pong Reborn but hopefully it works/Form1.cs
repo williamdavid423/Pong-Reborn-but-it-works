@@ -55,10 +55,11 @@ namespace Pong_Reborn_but_hopefully_it_works
         Pen blackPen = new Pen(Color.White);
         SolidBrush blueBrush = new SolidBrush(Color.DodgerBlue);
         SolidBrush whiteBrush = new SolidBrush(Color.White);
+
+       
         public Form1()
         {
             InitializeComponent();
-
         }
 
         private void Timer1_Tick(object sender, EventArgs e)
@@ -158,12 +159,40 @@ namespace Pong_Reborn_but_hopefully_it_works
                 {
                     outputLabel.Visible = true;
                     outputLabel.Text = "Player 1 Wins";
+                    Refresh();
+                    Thread.Sleep(1000);
+                    scene = 0;
+                    player1Score = 0;
+                    player2Score = 0;
+                    p1ScoreLabel.Text = "0";
+                    p2ScoreLabel.Text = "0";
+                    outputLabel.Text = "";
+                    outputLabel.Visible = false;
+                    p1ScoreLabel.Visible = false;
+                    p2ScoreLabel.Visible = false;
+                    fastButton.Visible = true;
+                    wallsButton.Visible = true;
+                    Refresh();
                     gameTimer.Enabled = false;
                 }
                 else if (player2Score == 3)
                 {
                     outputLabel.Visible = true;
                     outputLabel.Text = "Player 2 Wins";
+                    Refresh();
+                    Thread.Sleep(1000);
+                    scene = 0;
+                    player1Score = 0;
+                    player2Score = 0;
+                    p1ScoreLabel.Text = "0";
+                    p2ScoreLabel.Text = "0";
+                    outputLabel.Text = "";
+                    outputLabel.Visible = false;
+                    p1ScoreLabel.Visible = false;
+                    p2ScoreLabel.Visible = false;
+                    fastButton.Visible = true;
+                    wallsButton.Visible = true;
+                    Refresh();
                     gameTimer.Enabled = false;
                 }
 
