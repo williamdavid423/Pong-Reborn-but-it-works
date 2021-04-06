@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.gameTimer = new System.Windows.Forms.Timer(this.components);
             this.fastButton = new System.Windows.Forms.Button();
+            this.wallsButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // gameTimer
@@ -50,12 +51,25 @@
             this.fastButton.UseVisualStyleBackColor = false;
             this.fastButton.Click += new System.EventHandler(this.Button1_Click);
             // 
+            // wallsButton
+            // 
+            this.wallsButton.BackColor = System.Drawing.Color.White;
+            this.wallsButton.Font = new System.Drawing.Font("NewsGoth BdXCn BT", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.wallsButton.Location = new System.Drawing.Point(167, 172);
+            this.wallsButton.Name = "wallsButton";
+            this.wallsButton.Size = new System.Drawing.Size(90, 56);
+            this.wallsButton.TabIndex = 1;
+            this.wallsButton.Text = "Walls";
+            this.wallsButton.UseVisualStyleBackColor = false;
+            this.wallsButton.Click += new System.EventHandler(this.WallsButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(600, 400);
+            this.Controls.Add(this.wallsButton);
             this.Controls.Add(this.fastButton);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -73,6 +87,7 @@
 
         private System.Windows.Forms.Timer gameTimer;
         private System.Windows.Forms.Button fastButton;
+        private System.Windows.Forms.Button wallsButton;
     }
 }
 
