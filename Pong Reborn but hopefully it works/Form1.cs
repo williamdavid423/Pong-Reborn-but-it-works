@@ -47,6 +47,7 @@ namespace Pong_Reborn_but_hopefully_it_works
         public Form1()
         {
             InitializeComponent();
+            this.Focus();
         }
 
         private void Timer1_Tick(object sender, EventArgs e)
@@ -73,9 +74,10 @@ namespace Pong_Reborn_but_hopefully_it_works
                 {
                     paddle2Y += paddleSpeed;
                 }
-
+                Console.WriteLine(paddle1Y);
                 Refresh();
             }
+            
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -138,7 +140,7 @@ namespace Pong_Reborn_but_hopefully_it_works
 
                     break;
                 case 1:
-              
+                    gameTimer.Enabled = true;
                     fastButton.Visible = false;
                     break;
                 case 2:
