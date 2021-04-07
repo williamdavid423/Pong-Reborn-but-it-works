@@ -43,6 +43,8 @@ namespace Pong_Reborn_but_hopefully_it_works
         int ball2Y = 205;
         int ballXSpeed = 6;
         int ballYSpeed = 6;
+        int ball2XSpeed = -6;
+        int ball2YSpeed = -6;
         int ballWidth = 10;
         int ballHeight = 10;
 
@@ -149,21 +151,45 @@ namespace Pong_Reborn_but_hopefully_it_works
             }
             if (scene == 3)
             {
+                Rectangle player1Rec = new Rectangle(paddle1X, paddle1Y, paddleWidth, paddleHeight);
+                Rectangle player2Rec = new Rectangle(paddle2X, paddle2Y, paddleWidth, paddleHeight);
+                Rectangle ballRec = new Rectangle(ballX, ballY, ballWidth, ballHeight);
+                Rectangle ball2Rec = new Rectangle(ball2X, ball2Y, ballWidth, ballHeight);
+
+                if (player1Rec.IntersectsWith(ballRec))
+                {
+                    ballXSpeed *= -1;
+                }
+                if (player2Rec.IntersectsWith(ballRec))
+                {
+                    ballXSpeed *= -1;
+                }
+                if (player1Rec.IntersectsWith(ball2Rec))
+                {
+                    ball2XSpeed *= -1;
+                }
+                if (player2Rec.IntersectsWith(ball2Rec))
+                {
+                    ball2XSpeed *= -1;
+                }
+
                 paddleSpeed = 6;
 
                 gameMechanics();
                 if (ball2Y < 0)
                 {
-                    ballYSpeed *= -1;
+                    ball2YSpeed *= -1;
                 }
                 else if (ball2Y + ballHeight > 400)
                 {
-                    ballYSpeed *= -1;
+                    ball2YSpeed *= -1;
                 }
 
 
-                ball2X -= ballXSpeed;
-                ball2Y -= ballYSpeed;
+                ball2X += ball2XSpeed;
+                ball2Y += ball2YSpeed;
+
+
 
                 if (ballX > 600)
                 {
@@ -172,14 +198,36 @@ namespace Pong_Reborn_but_hopefully_it_works
 
                     ballX = 295;
                     ballY = 185;
+                    ball2X = 295;
+                    ball2Y = 205;
+                    paddle1X = 10;
+                    paddle1Y = 170;
+                    paddle2X = 580;
+                    paddle2Y = 170;
+                    ballX += ballXSpeed;
+                    ballY += ballYSpeed;
+                    ball2X -= ball2XSpeed;
+                    ball2Y -= ball2YSpeed;
                 }
                 else if (ballX < 0)
                 {
                     player2Score++;
                     p2ScoreLabel.Text = $"{player2Score}";
 
+
+
                     ballX = 295;
                     ballY = 185;
+                    ball2X = 295;
+                    ball2Y = 205;
+                    paddle1X = 10;
+                    paddle1Y = 170;
+                    paddle2X = 580;
+                    paddle2Y = 170;
+                    ballX += ballXSpeed;
+                    ballY += ballYSpeed;
+                    ball2X -= ball2XSpeed;
+                    ball2Y -= ball2YSpeed;
                 }
 
                 if (ball2X > 600)
@@ -187,16 +235,36 @@ namespace Pong_Reborn_but_hopefully_it_works
                     player1Score++;
                     p1ScoreLabel.Text = $"{player1Score}";
 
+                    ballX = 295;
+                    ballY = 185;
                     ball2X = 295;
                     ball2Y = 205;
+                    paddle1X = 10;
+                    paddle1Y = 170;
+                    paddle2X = 580;
+                    paddle2Y = 170;
+                    ballX += ballXSpeed;
+                    ballY += ballYSpeed;
+                    ball2X -= ball2XSpeed;
+                    ball2Y -= ball2YSpeed;
                 }
                 else if (ball2X < 0)
                 {
                     player2Score++;
                     p2ScoreLabel.Text = $"{player2Score}";
 
+                    ballX = 295;
+                    ballY = 185;
                     ball2X = 295;
                     ball2Y = 205;
+                    paddle1X = 10;
+                    paddle1Y = 170;
+                    paddle2X = 580;
+                    paddle2Y = 170;
+                    ballX += ballXSpeed;
+                    ballY += ballYSpeed;
+                    ball2X -= ball2XSpeed;
+                    ball2Y -= ball2YSpeed;
                 }
 
                 if (player1Score == 3)
@@ -217,6 +285,7 @@ namespace Pong_Reborn_but_hopefully_it_works
                     fastButton.Visible = true;
                     wallsButton.Visible = true;
                     twoButton.Visible = true;
+                    swapButton.Visible = true;
                     Refresh();
                     gameTimer.Enabled = false;
                 }
@@ -238,202 +307,84 @@ namespace Pong_Reborn_but_hopefully_it_works
                     fastButton.Visible = true;
                     wallsButton.Visible = true;
                     twoButton.Visible = true;
+                    swapButton.Visible = true;
                     Refresh();
                     gameTimer.Enabled = false;
                 }
 
-                    Refresh();
-                }
-
-
+                Refresh();
             }
-
-            private void Form1_KeyDown(object sender, KeyEventArgs e)
+            if (scene == 4)
             {
-                switch (e.KeyCode)
+                Rectangle player1Rec = new Rectangle(paddle1X, paddle1Y, paddleWidth, paddleHeight);
+                Rectangle ballRec = new Rectangle(ballX, ballY, ballWidth, ballHeight);
+                Rectangle ball2Rec = new Rectangle(ball2X, ball2Y, ballWidth, ballHeight);
+
+                if (ballRec.IntersectsWith(player1Rec))
                 {
-                    case Keys.W:
-                        wDown = true;
-                        break;
-                    case Keys.S:
-                        sDown = true;
-                        break;
-                    case Keys.Up:
-                        upArrowDown = true;
-                        break;
-                    case Keys.Down:
-                        downArrowDown = true;
-                        break;
+                    ballXSpeed *= -1;
                 }
-            }
-
-            private void Form1_KeyUp(object sender, KeyEventArgs e)
-            {
-                switch (e.KeyCode)
+                if (ball2Rec.IntersectsWith(player1Rec))
                 {
-                    case Keys.W:
-                        wDown = false;
-                        break;
-                    case Keys.S:
-                        sDown = false;
-                        break;
-                    case Keys.Up:
-                        upArrowDown = false;
-                        break;
-                    case Keys.Down:
-                        downArrowDown = false;
-                        break;
-                }
-            }
-
-            private void Form1_Paint(object sender, PaintEventArgs e)
-            {
-                if (scene == 1)
-                {
-                    e.Graphics.FillRectangle(whiteBrush, ballX, ballY, ballWidth, ballHeight);
-
-                    e.Graphics.FillRectangle(blueBrush, paddle1X, paddle1Y, paddleWidth, paddleHeight);
-                    e.Graphics.FillRectangle(blueBrush, paddle2X, paddle2Y, paddleWidth, paddleHeight);
-                }
-                if (scene == 2)
-                {
-                    e.Graphics.FillRectangle(whiteBrush, ballX, ballY, ballWidth, ballHeight);
-
-                    e.Graphics.FillRectangle(blueBrush, paddle1X, paddle1Y, paddleWidth, paddleHeight);
-                    e.Graphics.FillRectangle(blueBrush, paddle2X, paddle2Y, paddleWidth, paddleHeight);
-
-                    e.Graphics.DrawRectangle(blackPen, wall1X, wall1Y, wallWidth, wallHeight);
-                    e.Graphics.FillRectangle(whiteBrush, wall1X, wall1Y, wallWidth, wallHeight);
-
-                    e.Graphics.DrawRectangle(blackPen, wall2X, wall2Y, wallWidth, wallHeight);
-                    e.Graphics.FillRectangle(whiteBrush, wall2X, wall2Y, wallWidth, wallHeight);
-
-                }
-                if (scene == 3)
-                {
-                    e.Graphics.FillRectangle(whiteBrush, ballX, ballY, ballWidth, ballHeight);
-                    e.Graphics.FillRectangle(whiteBrush, ball2X, ball2Y, ballWidth, ballHeight);
-
-                    e.Graphics.FillRectangle(blueBrush, paddle1X, paddle1Y, paddleWidth, paddleHeight);
-                    e.Graphics.FillRectangle(blueBrush, paddle2X, paddle2Y, paddleWidth, paddleHeight);
+                    ballXSpeed *= -1;
                 }
 
-            }
+                paddle1X += ballXSpeed;
+                paddle1Y += ballYSpeed;
 
-            private void Button1_Click(object sender, EventArgs e)
-            {
-                if (scene == 0) { scene = 1; }
-
-                switch (scene)
+                if (wDown == true && ballY > 0)
                 {
-                    case 0:
-                        player1Score = 0;
-                        player2Score = 0;
-                        p1ScoreLabel.Visible = false;
-                        p2ScoreLabel.Visible = false;
-                        fastButton.Visible = true;
-                        wallsButton.Visible = true;
-
-                        break;
-                    case 1:
-                        gameTimer.Enabled = true;
-                        fastButton.Visible = false;
-                        wallsButton.Visible = false;
-                        twoButton.Visible = false;
-                        p1ScoreLabel.Visible = true;
-                        p2ScoreLabel.Visible = true;
-                        paddleSpeed = 6;
-                        this.Focus();
-                        break;
-
+                    ballY -= paddleSpeed;
                 }
-            }
-
-            private void WallsButton_Click(object sender, EventArgs e)
-            {
-                if (scene == 0) { scene = 2; }
-
-                switch (scene)
+                if (sDown == true && ballY < this.Height - ballHeight)
                 {
-                    case 2:
-                        gameTimer.Enabled = true;
-                        fastButton.Visible = false;
-                        wallsButton.Visible = false;
-                        twoButton.Visible = false;
-                        p1ScoreLabel.Visible = true;
-                        p2ScoreLabel.Visible = true;
-                        this.Focus();
-                        break;
-                }
-            }
-            public void gameMechanics()
-            {
-                ballX += ballXSpeed;
-                ballY += ballYSpeed;
-
-                if (wDown == true && paddle1Y > 0)
-                {
-                    paddle1Y -= paddleSpeed;
-                }
-                if (sDown == true && paddle1Y < this.Height - paddleHeight)
-                {
-                    paddle1Y += paddleSpeed;
+                    ballY += paddleSpeed;
                 }
 
-                if (upArrowDown == true && paddle2Y > 0)
+                if (upArrowDown == true && ball2Y > 0)
                 {
-                    paddle2Y -= paddleSpeed;
+                    ball2Y -= paddleSpeed;
                 }
-                if (downArrowDown == true && paddle2Y < this.Height - paddleHeight)
+                if (downArrowDown == true && ball2Y < this.Height - ballHeight)
                 {
-                    paddle2Y += paddleSpeed;
+                    ball2Y += paddleSpeed;
                 }
 
-                if (ballY < 0)
+                if (paddle1Y < 0)
                 {
                     ballYSpeed *= -1;
                 }
-                else if (ballY + ballHeight > 400)
+                else if (paddle1Y + paddleHeight > 400)
                 {
                     ballYSpeed *= -1;
                 }
-            }
-            private void scoring()
-            {
-                if (ballX > 600)
+
+
+                if (paddle1X > 600)
                 {
                     player1Score++;
                     p1ScoreLabel.Text = $"{player1Score}";
 
-                    ballX = 295;
+                    ballX = 10;
                     ballY = 195;
-                    wall1X = 195;
-                    wall1Y = 160;
-                    wall2X = 395;
-                    wall2Y = 160;
-                    paddle1X = 10;
+                    ball2X = 580;
+                    ball2Y = 195;
+                    paddle1X = 295;
                     paddle1Y = 170;
-                    paddle2X = 580;
-                    paddle2Y = 170;
                 }
-                else if (ballX < 0)
+                else if (paddle1X < 0)
                 {
                     player2Score++;
                     p2ScoreLabel.Text = $"{player2Score}";
 
-                    ballX = 295;
+                    ballX = 10;
                     ballY = 195;
-                    ballX = 295;
-                    ballY = 195;
-                    wall1X = 195;
-                    wall1Y = 160;
-                    wall2X = 395;
-                    wall2Y = 160;
-                    paddle1X = 10;
+                    ball2X = 580;
+                    ball2Y = 195;
+                    paddle1X = 295;
                     paddle1Y = 170;
-                    paddle2X = 580;
-                    paddle2Y = 170;
                 }
+
                 if (player1Score == 3)
                 {
                     outputLabel.Visible = true;
@@ -452,6 +403,7 @@ namespace Pong_Reborn_but_hopefully_it_works
                     fastButton.Visible = true;
                     wallsButton.Visible = true;
                     twoButton.Visible = true;
+                    swapButton.Visible = true;
                     Refresh();
                     gameTimer.Enabled = false;
                 }
@@ -473,28 +425,303 @@ namespace Pong_Reborn_but_hopefully_it_works
                     fastButton.Visible = true;
                     wallsButton.Visible = true;
                     twoButton.Visible = true;
+                    swapButton.Visible = true;
                     Refresh();
                     gameTimer.Enabled = false;
                 }
+
+                Refresh();
             }
 
-            private void TwoButton_Click(object sender, EventArgs e)
-            {
-                if (scene == 0) { scene = 3; }
 
-                switch (scene)
-                {
-                    case 3:
-                        ballY = 185;
-                        gameTimer.Enabled = true;
-                        fastButton.Visible = false;
-                        wallsButton.Visible = false;
-                        twoButton.Visible = false;
-                        p1ScoreLabel.Visible = true;
-                        p2ScoreLabel.Visible = true;
-                        this.Focus();
-                        break;
-                }
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.W:
+                    wDown = true;
+                    break;
+                case Keys.S:
+                    sDown = true;
+                    break;
+                case Keys.Up:
+                    upArrowDown = true;
+                    break;
+                case Keys.Down:
+                    downArrowDown = true;
+                    break;
+            }
+        }
+
+        private void Form1_KeyUp(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.W:
+                    wDown = false;
+                    break;
+                case Keys.S:
+                    sDown = false;
+                    break;
+                case Keys.Up:
+                    upArrowDown = false;
+                    break;
+                case Keys.Down:
+                    downArrowDown = false;
+                    break;
+            }
+        }
+
+        private void Form1_Paint(object sender, PaintEventArgs e)
+        {
+            if (scene == 1)
+            {
+                e.Graphics.FillRectangle(whiteBrush, ballX, ballY, ballWidth, ballHeight);
+
+                e.Graphics.FillRectangle(blueBrush, paddle1X, paddle1Y, paddleWidth, paddleHeight);
+                e.Graphics.FillRectangle(blueBrush, paddle2X, paddle2Y, paddleWidth, paddleHeight);
+            }
+            if (scene == 2)
+            {
+                e.Graphics.FillRectangle(whiteBrush, ballX, ballY, ballWidth, ballHeight);
+
+                e.Graphics.FillRectangle(blueBrush, paddle1X, paddle1Y, paddleWidth, paddleHeight);
+                e.Graphics.FillRectangle(blueBrush, paddle2X, paddle2Y, paddleWidth, paddleHeight);
+
+                e.Graphics.DrawRectangle(blackPen, wall1X, wall1Y, wallWidth, wallHeight);
+                e.Graphics.FillRectangle(whiteBrush, wall1X, wall1Y, wallWidth, wallHeight);
+
+                e.Graphics.DrawRectangle(blackPen, wall2X, wall2Y, wallWidth, wallHeight);
+                e.Graphics.FillRectangle(whiteBrush, wall2X, wall2Y, wallWidth, wallHeight);
+
+            }
+            if (scene == 3)
+            {
+                e.Graphics.FillRectangle(whiteBrush, ballX, ballY, ballWidth, ballHeight);
+                e.Graphics.FillRectangle(whiteBrush, ball2X, ball2Y, ballWidth, ballHeight);
+
+                e.Graphics.FillRectangle(blueBrush, paddle1X, paddle1Y, paddleWidth, paddleHeight);
+                e.Graphics.FillRectangle(blueBrush, paddle2X, paddle2Y, paddleWidth, paddleHeight);
+            }
+            if (scene == 4)
+            {
+                e.Graphics.FillRectangle(whiteBrush, ballX, ballY, ballWidth, ballHeight);
+                e.Graphics.FillRectangle(whiteBrush, ball2X, ball2Y, ballWidth, ballHeight);
+
+                e.Graphics.FillRectangle(blueBrush, paddle1X, paddle1Y, paddleWidth, paddleHeight);
+
+            }
+
+        }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            if (scene == 0) { scene = 1; }
+
+            switch (scene)
+            {
+                case 0:
+                    player1Score = 0;
+                    player2Score = 0;
+                    p1ScoreLabel.Visible = false;
+                    p2ScoreLabel.Visible = false;
+                    fastButton.Visible = true;
+                    wallsButton.Visible = true;
+
+                    break;
+                case 1:
+                    gameTimer.Enabled = true;
+                    fastButton.Visible = false;
+                    wallsButton.Visible = false;
+                    twoButton.Visible = false;
+                    swapButton.Visible = false;
+                    p1ScoreLabel.Visible = true;
+                    p2ScoreLabel.Visible = true;
+                    paddleSpeed = 6;
+                    this.Focus();
+                    break;
+
+            }
+        }
+
+        private void WallsButton_Click(object sender, EventArgs e)
+        {
+            if (scene == 0) { scene = 2; }
+
+            switch (scene)
+            {
+                case 2:
+                    gameTimer.Enabled = true;
+                    fastButton.Visible = false;
+                    wallsButton.Visible = false;
+                    twoButton.Visible = false;
+                    swapButton.Visible = false;
+                    p1ScoreLabel.Visible = true;
+                    p2ScoreLabel.Visible = true;
+                    this.Focus();
+                    break;
+            }
+        }
+        public void gameMechanics()
+        {
+            ballX += ballXSpeed;
+            ballY += ballYSpeed;
+
+            if (wDown == true && paddle1Y > 0)
+            {
+                paddle1Y -= paddleSpeed;
+            }
+            if (sDown == true && paddle1Y < this.Height - paddleHeight)
+            {
+                paddle1Y += paddleSpeed;
+            }
+
+            if (upArrowDown == true && paddle2Y > 0)
+            {
+                paddle2Y -= paddleSpeed;
+            }
+            if (downArrowDown == true && paddle2Y < this.Height - paddleHeight)
+            {
+                paddle2Y += paddleSpeed;
+            }
+
+            if (ballY < 0)
+            {
+                ballYSpeed *= -1;
+            }
+            else if (ballY + ballHeight > 400)
+            {
+                ballYSpeed *= -1;
+            }
+        }
+        private void scoring()
+        {
+            if (ballX > 600)
+            {
+                player1Score++;
+                p1ScoreLabel.Text = $"{player1Score}";
+
+                ballX = 295;
+                ballY = 195;
+                wall1X = 195;
+                wall1Y = 160;
+                wall2X = 395;
+                wall2Y = 160;
+                paddle1X = 10;
+                paddle1Y = 170;
+                paddle2X = 580;
+                paddle2Y = 170;
+            }
+            else if (ballX < 0)
+            {
+                player2Score++;
+                p2ScoreLabel.Text = $"{player2Score}";
+
+                ballX = 295;
+                ballY = 195;
+                ballX = 295;
+                ballY = 195;
+                wall1X = 195;
+                wall1Y = 160;
+                wall2X = 395;
+                wall2Y = 160;
+                paddle1X = 10;
+                paddle1Y = 170;
+                paddle2X = 580;
+                paddle2Y = 170;
+            }
+            if (player1Score == 3)
+            {
+                outputLabel.Visible = true;
+                outputLabel.Text = "Player 1 Wins";
+                Refresh();
+                Thread.Sleep(1000);
+                scene = 0;
+                player1Score = 0;
+                player2Score = 0;
+                p1ScoreLabel.Text = "0";
+                p2ScoreLabel.Text = "0";
+                outputLabel.Text = "";
+                outputLabel.Visible = false;
+                p1ScoreLabel.Visible = false;
+                p2ScoreLabel.Visible = false;
+                fastButton.Visible = true;
+                wallsButton.Visible = true;
+                twoButton.Visible = true;
+                swapButton.Visible = true;
+                Refresh();
+                gameTimer.Enabled = false;
+            }
+            else if (player2Score == 3)
+            {
+                outputLabel.Visible = true;
+                outputLabel.Text = "Player 2 Wins";
+                Refresh();
+                Thread.Sleep(1000);
+                scene = 0;
+                player1Score = 0;
+                player2Score = 0;
+                p1ScoreLabel.Text = "0";
+                p2ScoreLabel.Text = "0";
+                outputLabel.Text = "";
+                outputLabel.Visible = false;
+                p1ScoreLabel.Visible = false;
+                p2ScoreLabel.Visible = false;
+                fastButton.Visible = true;
+                wallsButton.Visible = true;
+                twoButton.Visible = true;
+                swapButton.Visible = true;
+                Refresh();
+                gameTimer.Enabled = false;
+            }
+        }
+
+        private void TwoButton_Click(object sender, EventArgs e)
+        {
+            if (scene == 0) { scene = 3; }
+
+            switch (scene)
+            {
+                case 3:
+                    ballY = 185;
+                    gameTimer.Enabled = true;
+                    fastButton.Visible = false;
+                    wallsButton.Visible = false;
+                    twoButton.Visible = false;
+                    swapButton.Visible = false;
+                    p1ScoreLabel.Visible = true;
+                    p2ScoreLabel.Visible = true;
+                    this.Focus();
+                    break;
+            }
+        }
+
+        private void SwapButton_Click(object sender, EventArgs e)
+        {
+            if (scene == 0) { scene = 4; }
+
+            switch (scene)
+            {
+                case 4:
+                    paddleSpeed = 6;
+                    paddle1X = 295;
+                    paddle1Y = 170;
+                    ballX = 10;
+                    ballY = 195;
+                    ball2X = 580;
+                    ball2Y = 195;
+                    gameTimer.Enabled = true;
+                    fastButton.Visible = false;
+                    wallsButton.Visible = false;
+                    twoButton.Visible = false;
+                    swapButton.Visible = false;
+                    p1ScoreLabel.Visible = true;
+                    p2ScoreLabel.Visible = true;
+                    this.Focus();
+                    break;
             }
         }
     }
+}
