@@ -35,6 +35,7 @@
             this.p1ScoreLabel = new System.Windows.Forms.Label();
             this.p2ScoreLabel = new System.Windows.Forms.Label();
             this.outputLabel = new System.Windows.Forms.Label();
+            this.twoButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // gameTimer
@@ -106,12 +107,25 @@
             this.outputLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.outputLabel.Visible = false;
             // 
+            // twoButton
+            // 
+            this.twoButton.BackColor = System.Drawing.Color.White;
+            this.twoButton.Font = new System.Drawing.Font("NewsGoth BdXCn BT", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.twoButton.Location = new System.Drawing.Point(354, 172);
+            this.twoButton.Name = "twoButton";
+            this.twoButton.Size = new System.Drawing.Size(90, 56);
+            this.twoButton.TabIndex = 5;
+            this.twoButton.Text = "Two Balls";
+            this.twoButton.UseVisualStyleBackColor = false;
+            this.twoButton.Click += new System.EventHandler(this.TwoButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(600, 400);
+            this.Controls.Add(this.twoButton);
             this.Controls.Add(this.outputLabel);
             this.Controls.Add(this.p2ScoreLabel);
             this.Controls.Add(this.p1ScoreLabel);
@@ -138,6 +152,7 @@
         private System.Windows.Forms.Label p1ScoreLabel;
         private System.Windows.Forms.Label p2ScoreLabel;
         private System.Windows.Forms.Label outputLabel;
+        private System.Windows.Forms.Button twoButton;
     }
 }
 
