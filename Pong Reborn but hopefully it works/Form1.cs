@@ -79,15 +79,13 @@ namespace Pong_Reborn_but_hopefully_it_works
                 if (player1Rec.IntersectsWith(ballRec))
                 {
                     ballXSpeed *= Convert.ToInt32(-1.1);
-                    ballX = paddle1X + paddleWidth + 1;
                 }
                 if (player2Rec.IntersectsWith(ballRec))
                 {
                     ballXSpeed *= Convert.ToInt32(-1.1);
-                    ballX = paddle2X - ballWidth - 1;
                 }
 
-
+                scoring();
 
                 Console.WriteLine(paddle1Y);
                 Refresh();
@@ -105,12 +103,10 @@ namespace Pong_Reborn_but_hopefully_it_works
                 if (player1Rec.IntersectsWith(ballRec))
                 {
                     ballXSpeed *= -1;
-                    ballX = paddle1X + paddleWidth + 1;
                 }
                 if (player2Rec.IntersectsWith(ballRec))
                 {
                     ballXSpeed *= -1;
-                    ballX = paddle2X - ballWidth - 1;
                 }
 
                 wall1Y += wallSpeed;
